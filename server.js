@@ -23,10 +23,10 @@ const dbConfiguration = require('./shared/connect');
 app.use(morgan('dev'));
 app.use(express.json({ limit: '50mb' }));
 app.use(cors({
-    // credentials: true,
-    // origin: '*',
-    // methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    // allowedHeaders: ['Content-Type', 'Authorization']
+    credentials: true,
+    origin: '*',
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(cookieParser());
