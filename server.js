@@ -24,7 +24,7 @@ app.use(morgan('dev'));
 app.use(express.json({ limit: '50mb' }));
 app.use(cors({
     credentials: true,
-    origin: "http://localhost:3000",
+    origin: "https://shopp-e.netlify.app/",
     // methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     // allowedHeaders: ['Content-Type', 'Authorization']
 }));
