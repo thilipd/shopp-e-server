@@ -19,7 +19,7 @@ dotenv.config();
 //database configuration
 const dbConfiguration = require('./shared/connect');
 
-app.options('*', cors());
+app.options(process.env.CLIENT_URL, cors());
 
 // middleware
 app.use(morgan('dev'));
