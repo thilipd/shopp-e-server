@@ -19,6 +19,8 @@ dotenv.config();
 //database configuration
 const dbConfiguration = require('./shared/connect');
 
+app.options('*', cors());
+
 // middleware
 app.use(morgan('dev'));
 app.use(express.json({ limit: '50mb' }));
