@@ -9,26 +9,27 @@ const fileUpload = require('express-fileupload');
 
 const dotenv = require('dotenv');
 
-
-
 //app
 const app = express();
 
 dotenv.config();
 
+
+console.log(global)
 //database configuration
 const dbConfiguration = require('./shared/connect');
 
-app.options(`*`, cors());
+// app.options(`*`, cors());
 
 // middleware
 app.use(morgan('dev'));
 app.use(express.json({ limit: '50mb' }));
 app.use(cors({
     credentials: true,
-    origin: process.env.CLIENT_URL,
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    allowedHeaders: ['Content-Type', 'Authorization']
+    origin: `${process.env.CLIENT_URL}`,
+
+    // methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    // allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(cookieParser());
@@ -50,7 +51,9 @@ const subRouter = require('./routes/sub');
 const productRouter = require('./routes/product');
 
 
-
+app.get('/', (req, res) => {
+    res.send('Hello')
+})
 app.use('/user', authRouter);
 app.use('/api', uploadRouter);
 app.use('/catagories', catagoryRouter);

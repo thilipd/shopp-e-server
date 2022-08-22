@@ -6,7 +6,7 @@ const auth = require('../middelware/auth');
 const adminAuth = require('../middelware/adminAuth');
 
 subRouter.post('/create', auth, subControl.create);
-subRouter.get('/list', auth, subControl.list);
+subRouter.get('/list', subControl.list);
 subRouter.get('/sub/:slug', subControl.read)
 subRouter.put('/sub/:slug', auth, subControl.update)
 subRouter.delete('/sub/:slug', auth, subControl.delete)

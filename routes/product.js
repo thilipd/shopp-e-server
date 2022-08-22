@@ -11,5 +11,8 @@ productRouter.delete('/product/:slug', productControl.delete);
 productRouter.get('/product/:slug', productControl.read);
 productRouter.put('/product/:slug', productControl.update);
 
+productRouter.post('/sortProduct', productControl.sortList);
+productRouter.get('/count', productControl.count);
+
 
 module.exports = productRouter;

@@ -1,6 +1,7 @@
 const Catagory = require('../models/catagory');
 const Sub = require('../models/sub');
 const slugify = require('slugify');
+const Product = require('../models/product');
 
 
 const catagoryControl = {
@@ -33,8 +34,12 @@ const catagoryControl = {
         try {
             const slug = req.params.slug;
 
-            const catagory = await Catagory.findOne({ slug });
-            return res.status(200).json(catagory);
+            const catagory = await Catagory.findOne({ slug }).exec();
+
+            const products = await Product.find({ catagory })
+                .populate('catagory')
+                .populate('createdAt', "_id name");
+            return res.status(200).json({ catagory, products });
 
         } catch (error) {
             return res.status(500).json({ msg: error.message });

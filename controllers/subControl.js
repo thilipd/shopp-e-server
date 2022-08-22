@@ -1,5 +1,6 @@
 const Sub = require('../models/sub');
 const slugify = require('slugify');
+const Product = require('../models/product');
 
 
 const SubControl = {
@@ -33,8 +34,15 @@ const SubControl = {
         try {
             const slug = req.params.slug;
 
-            const sub = await Sub.findOne({ slug });
-            return res.status(200).json(sub);
+            const sub = await Sub.findOne({ slug }).exec()
+
+            const products = await Product.find({ sub })
+                .populate('sub')
+                .populate('createdAt', "_id name");
+
+            return res.status(200).json({ sub, products });
+
+
 
         } catch (error) {
             return res.status(500).json({ msg: error.message });

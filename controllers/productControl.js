@@ -27,7 +27,7 @@ const productControl = {
                 .limit(count)
                 .populate({ path: 'catagory' })
                 .populate({ path: 'sub' })
-                .sort([['createdAt', 'desc']])
+                .sort([['createdAt', 1]])
                 .exec();
 
             res.status(200).json(products)
@@ -98,6 +98,58 @@ const productControl = {
         }
 
     },
+
+    sortList: async (req, res) => {
+        const { sort, order, page } = req.body
+
+
+        const currentPage = page || 1;
+        const perPage = 5;
+        try {
+
+            const products = await Product.find({})
+                .skip((currentPage - 1) * perPage)
+                .limit(perPage)
+                .populate('catagory')
+                .populate('sub')
+                .sort([[sort, order]])
+                .exec()
+
+            res.status(200).json(products);
+
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json({ msg: error.message });
+        }
+    },
+
+    count: async (req, res) => {
+        try {
+            let count = await Product.find().estimatedDocumentCount().exec()
+
+            res.json(count);
+
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json({ msg: error.message });
+        }
+
+    },
+
+    listByCata: async (req, res) => {
+
+        const { cataId } = req.params
+
+        // console.log(req.params)
+
+        try {
+            let product = await Product.find({ catagory: cataId });
+            res.json(product);
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json({ msg: error.message });
+        }
+    }
 
 }
 
